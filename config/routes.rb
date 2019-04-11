@@ -1,23 +1,34 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  post 'users/create' => 'users#create'
-  delete 'users/:id/destroy' => 'users#destroy'
-  patch 'users/:id/update' => 'users#update'
+  get 'users/create' => 'users#create'
+  get 'users/:id/destroy' => 'users#destroy'
+  get 'users/:id/update' => 'users#update'
 
-  post 'events/create' => 'events#create'
-  delete 'events/:id/destroy' => 'events#destroy'
-  patch 'events/:id/update' => 'events#update'
+  get 'events/create' => 'events#create'
+  get 'events/:id/destroy' => 'events#destroy'
+  get 'events/:id/update' => 'events#update'
   
-  post 'event_venues/create' => 'event_venues#create'
-  delete 'event_venues/:id/destroy' => 'event_venues#destroy'
-  patch 'event_venues/:id/update' => 'event_venues#update'
+  get 'event_venues/create' => 'event_venues#create'
+  get 'event_venues/:id/destroy' => 'event_venues#destroy'
+  get 'event_venues/:id/update' => 'event_venues#update'
   
-  post 'ticket_types/create' => 'ticket_types#create'
-  delete 'ticket_types/:id/destroy' => 'ticket_types#destroy'
-  patch 'ticket_types/:id/update' => 'ticket_types#update'
+  get 'ticket_types/create' => 'ticket_types#create'
+  get 'ticket_types/:id/destroy' => 'ticket_types#destroy'
+  get 'ticket_types/:id/update' => 'ticket_types#update'
   
-  post 'tickets/create' => 'tickets#create'
-  delete 'tickets/:id/destroy' => 'tickets#destroy'
-  patch 'tickets/:id/update' => 'tickets#update'
+  get 'tickets/create' => 'tickets#create'
+  get 'tickets/:id/destroy' => 'tickets#destroy'
+  get 'tickets/:id/update' => 'tickets#update'
+  get '/tickets/' => 'tickets#index'
+  
+
+  resources :ticket_types do
+  	resources :tickets
+  end
+
+  get 'ticket_types/:id/tickets' => 'tickets#index'
+  get 'ticket_types/:id/tickets/create' => 'tickets#create'
+  get 'ticket_types/:id/tickets/:id/update' => 'tickets#update'
+  get 'ticket_types/:id/tickets/:id/destroy' => 'tickets#destroy'
   
 end

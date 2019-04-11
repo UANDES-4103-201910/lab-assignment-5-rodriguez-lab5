@@ -3,39 +3,34 @@ class TicketsController < ApplicationController
 
   def create
     @ticket = Ticket.new(ticket_params)
-
-    respond_to do |format|
-      if @ticket.save
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
-        format.json { render :show, status: :created, location: @ticket }
-      else
-        format.html { render :new }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
-      end
+    if @ticket.save
+      render json:{message: 'Success Creating'}
+    else
+      render json:{message: 'Failure Creating'}
     end
   end
-
 
   def update
-    respond_to do |format|
       if @ticket.update(ticket_params)
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully updated.' }
-        format.json { render :show, status: :ok, location: @ticket }
+        render json:{message: 'Success Updating'}
       else
-        format.html { render :edit }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
+        render json:{message: 'Failure Updating'}
       end
-    end
   end
+
 
   def destroy
-    @ticket.destroy
-    respond_to do |format|
-      format.html { redirect_to tickets_url, notice: 'Ticket was successfully destroyed.' }
-      format.json { head :no_content }
+    if @ticket.destroy
+      render json:{message: 'Success Destroying'}
+    else
+      render json:{message: 'Failure Destroying'}  
     end
   end
 
+  def index
+    @ticket = Ticket.all 
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_ticket

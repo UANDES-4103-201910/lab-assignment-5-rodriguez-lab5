@@ -3,36 +3,45 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      render json:{message: 'Success Creating'}
+    else
+      render json:{message: 'Failure Creating'}
     end
   end
 
   def update
-    respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+        render json:{message: 'Success Updating'}
       else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        render json:{message: 'Failure Updating'}
       end
-    end
   end
 
 
   def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
+    if @user.destroy
+      render json:{message: 'Success Destroying'}
+    else
+      render json:{message: 'Failure Destroying'}  
+    end
+  end
+  
+  def user_with_most_tickets
+    usersall = User.all
+    data = {}
+    usersall.each do |x|
+      sum = 0
+      x.orders.each do |y|
+        y.ticket.each do |z|
+          sum = sum + 1
+      data.push([sum, x.name])
+
+    #order
+    mm = [0, 0]
+    data.each do |x|
+    if x[0] > mm[0]
+      mm = x
     end
   end
 

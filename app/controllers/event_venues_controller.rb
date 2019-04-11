@@ -3,37 +3,30 @@ class EventVenuesController < ApplicationController
 
   def create
     @event_venue = EventVenue.new(event_venue_params)
-
-    respond_to do |format|
-      if @event_venue.save
-        format.html { redirect_to @event_venue, notice: 'Event venue was successfully created.' }
-        format.json { render :show, status: :created, location: @event_venue }
-      else
-        format.html { render :new }
-        format.json { render json: @event_venue.errors, status: :unprocessable_entity }
-      end
+    if @event_venue.save
+      render json:{message: 'Success Creating'}
+    else
+      render json:{message: 'Failure Creating'}
     end
   end
 
   def update
-    respond_to do |format|
       if @event_venue.update(event_venue_params)
-        format.html { redirect_to @event_venue, notice: 'Event venue was successfully updated.' }
-        format.json { render :show, status: :ok, location: @event_venue }
+        render json:{message: 'Success Updating'}
       else
-        format.html { render :edit }
-        format.json { render json: @event_venue.errors, status: :unprocessable_entity }
+        render json:{message: 'Failure Updating'}
       end
+  end
+
+
+  def destroy
+    if @event_venue.destroy
+      render json:{message: 'Success Destroying'}
+    else
+      render json:{message: 'Failure Destroying'}  
     end
   end
 
-  def destroy
-    @event_venue.destroy
-    respond_to do |format|
-      format.html { redirect_to event_venues_url, notice: 'Event venue was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
