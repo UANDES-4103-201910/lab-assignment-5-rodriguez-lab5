@@ -1,0 +1,17 @@
+<%= form_with(model: event_venue, local: true) do |form| %>
+  <% if event_venue.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(event_venue.errors.count, "error") %> prohibited this event_venue from being saved:</h2>
+
+      <ul>
+      <% event_venue.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
